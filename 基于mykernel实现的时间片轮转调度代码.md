@@ -1,5 +1,6 @@
 #基于mykernel实现的时间片轮转调度代码
 **张必红原创作品转载请注明出处《Linux内核分析》MOOC课程http://mooc.study.163.com/course/USTC-1000029000**
+
 首先，我的环境使用的实验楼的环境，所有的配置已经部署好了。
 下面，我就直接开始分析代码了。
 这是一个提供了时钟中断(time_handler)的周期性执行my_time_handler中断处理程序。
@@ -109,4 +110,5 @@ typedef struct PCB{
 ###最后小结
 mykernel模仿进程的切换大致过程就如上述所分析的，进程和进程之间的切换，重点是上下文的保存，esp和ebp的保存，以及当进程切换回来以后能回到正确的位置执行，所以eip也要正确保存，由于所有的进程都运行一个简单的my_process程序，所以，就不要保存和还原通用寄存器了。但是，这个mykernel还是能够很好地说明进程之间切换是怎么回事。
 最后附上一张图，看看进程的切换。
-完整的mykernel源代码见本站的mykernel。
+![进程切换](/home/zbh/Downloads/test/7e1a10b786dcf708ce60a97d5ef98225.png)
+完整的mykernel源代码见本站的[mykernel](https://github.com/zbh24/mykernel)。
