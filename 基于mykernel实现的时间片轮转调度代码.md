@@ -109,6 +109,7 @@ typedef struct PCB{
 
 ###最后小结
 mykernel模仿进程的切换大致过程就如上述所分析的，进程和进程之间的切换，重点是上下文的保存，esp和ebp的保存，以及当进程切换回来以后能回到正确的位置执行，所以eip也要正确保存，由于所有的进程都运行一个简单的my_process程序，所以，就不要保存和还原通用寄存器了。但是，这个mykernel还是能够很好地说明进程之间切换是怎么回事。
+
 最后附上一张图，看看进程的切换。
 ![进程切换](/home/zbh/Downloads/test/7e1a10b786dcf708ce60a97d5ef98225.png)
 完整的mykernel源代码见本站的[mykernel](https://github.com/zbh24/mykernel)。
