@@ -17,7 +17,7 @@
 trap_init(中断初始化)，ipc_inti(进程通信初始化)，mm_init(内存管理初始化)，sched_init()(进程调度初始化)等等。最后，我们来看一下 rest_inti()函数。我们在这里加个断点，然后进去看看。
 如下图。
 
-![进程切换](1)
+![进程切换](https://github.com/zbh24/LinuxCourseBlog/blob/master/png/%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A/1.png)
 
 首先，我们发现了它又创建了一个新的进程：
 ``` C
@@ -34,11 +34,11 @@ cpu_startup_entry(CPUHP_ONLINE);
 ```
 如下图：
 
-![进程切换](2)
+![进程切换](https://github.com/zbh24/LinuxCourseBlog/blob/master/png/%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A/2.png)
 
 然后执行cpu_idle_loop()函数，我们可以看到这是个死循环，这样cpu就会不停地执行0号进程。
 
-![进程切换](2)
+![进程切换](https://github.com/zbh24/LinuxCourseBlog/blob/master/png/%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A/3.png)
 
 ####总结
 现在，我们回头来，仔细看这个启动过程，我们来重点看一下0号进程（idle），和1号进程，是怎么来的。0号进程，是在这里初始化set_task_stack_end_magic(&init_task)
