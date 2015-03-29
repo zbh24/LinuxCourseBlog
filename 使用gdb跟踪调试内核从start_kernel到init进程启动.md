@@ -36,7 +36,7 @@ cpu_startup_entry(CPUHP_ONLINE);
 
 ![进程切换](https://github.com/zbh24/LinuxCourseBlog/blob/master/png/%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A/2.png)
 
-然后执行cpu_idle_loop()函数，我们可以看到这是个死循环，这样cpu就会不停地执行0号进程。
+然后执行cpu_idle_loop()函数，我们可以看到这是个循环，这样cpu就会不停地执行0号进程。
 
 ![进程切换](https://github.com/zbh24/LinuxCourseBlog/blob/master/png/%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A/3.png)
 
