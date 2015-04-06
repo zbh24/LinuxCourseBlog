@@ -50,3 +50,5 @@ http://codelab.shiyanlou.com/xref/linux-3.18.6/arch/x86/kernel/traps.c
 
 ####总结
 经过以上，我们一个wirte系统调用的跟踪，和源代码的分析，我们已经大致了解了系统调用的具体过程和步骤，我们可以认为它就是个特殊的系统调用，那么执行int 0x80之后的流程图，我们可以简略的认为是下图。
+![8](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/8.png)
+最后本次实验相关的源码，请参考[Menu](www.baidu.com)
