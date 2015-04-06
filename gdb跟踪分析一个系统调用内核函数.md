@@ -37,3 +37,7 @@ http://codelab.shiyanlou.com/xref/linux-3.18.6/arch/x86/kernel/traps.c
 515restore_all:
 516	TRACE_IRQS_IRET
 ```
+我们可以发现了，当执行int 0x80过后，然后就跳到了system_call，然后首先是SAVE_ALL保存现场，然后根据相应的调用号执行相应的中断处理函数， 即call *sys_call_table(,%eax,4)。执行完成了以后，先返回值eax保存起来。然后它会先检查一下，看是否有其他的工作要做，比如处理系统信号或者进程切换，也就是这句话代码syscall_exit,如果有的话，就去处理信号，或者执行的进程切换。当这些都处理完成了以后，先restore_all 恢复现场，然后返回irq_return，系统调用过程返回。
+
+####总结
+经过以上，我们一个wirte系统调用的跟踪，和源代码的分析，我们已经大致了解了系统调用的具体过程和步骤，我们可以认为它就是个特殊的系统调用，那么执行int 0x80之后的流程图，我们可以简略的认为是下图。
