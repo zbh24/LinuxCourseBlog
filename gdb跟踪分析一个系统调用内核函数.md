@@ -4,13 +4,14 @@
 上次博客中，我曾经写过一个内联汇编，实现了一个write调用，实现打印字符串的功能，这次我们将使用gdb来完全跟踪分析一下整个系统调用过程。
 
 ####gdb跟踪Write系统调用
-首先，删掉menu，然后把最新的git clone下来，然后修改菜单，把print和print_asm加进去，过程如下图。
+首先，删掉menu（rm menu -rf），然后把最新的git clone下来，然后修改菜单，把print和print_asm加进去，接着make roofs，过程如下图。
+![3](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/3.png)
+
 ![4](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/4.png)
 
-然后，我们启动gdb和qemu，按如下方式调用，加上断点，然后运行。我们通过查询系统调用表，我们可知道Write系统调用是13号，中断处理函数是sys_write,我们在这里加个断点，b sys_write,然后 c。如下图：
+然后，我们启动gdb和qemu，按如下方式调用，加上断点，然后运行。我们通过查询系统调用表，我们可知道Write系统调用是4号，中断处理函数是sys_write,我们在这里加个断点，b sys_write,然后 c。如下图：
 ![6](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/6.png)
-
-如下图:
+我们可通过si指令，在这个函数单执，如下图:
 ![7](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/7.png)
 
 我们在qemu里面执行print_asm函数，我们发现它已经把sys_write执行完了。具体这个过程是怎么样的，我们下面将来看源代码来具体分析。
