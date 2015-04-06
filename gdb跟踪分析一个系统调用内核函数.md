@@ -5,9 +5,12 @@
 
 ####gdb跟踪Write系统调用
 首先，删掉menu，然后把最新的git clone下来，然后修改菜单，把print和print_asm加进去，过程如下图。
-[!xitong](www.baidu.com)
+![4](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/4.png)
 然后，我们启动gdb和qemu，按如下方式调用，加上断点，然后运行。我们通过查询系统调用表，我们可知道Write系统调用是13号，中断处理函数是sys_write,我们在这里加个断点，b sys_write,然后 c。如下图：
-如下图，我们在qemu里面执行print_asm函数，我们发现它已经把sys_write执行完了。具体这个过程是怎么样的，我们下面将来看源代码来具体分析。
+![6](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/6.png)
+如下图:
+![7](https://github.com/zbh24/LinuxCourseBlog/blob/master/gdb/7.png)
+我们在qemu里面执行print_asm函数，我们发现它已经把sys_write执行完了。具体这个过程是怎么样的，我们下面将来看源代码来具体分析。
 
 ####详解Write系统
 一：首先我们可以知道，系统调用也是个中断，中断需要初始化。所以，初始化是这里做的。1）首先，在http://codelab.shiyanlou.com/xref/linux-3.18.6/init/main.c里面的start_kernel里面调用trap_init()做初始化的。接着，在这个文件里，做绑定
