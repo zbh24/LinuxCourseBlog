@@ -23,7 +23,7 @@ truct task_struct {
 ![5](https://github.com/zbh24/LinuxCourseBlog/blob/master/fork/5.png)
 我们可以看到程序地的确是这样一步步执行的。
 这里，我们可以看到fork是如何一次调用，两次返回的。父进程的eax的返回值是在eax中，而子进程的eax是置为0的，当中断返回时，把把这个值复制到eax中，同时子进程的内核内核堆栈也复制了父进程的内核堆栈，所以，把返回时，和父进程执行相同的代码段。通过一步步跟踪，我们发现，执行过程跟我们预期的一样，就是这样做的，等到调度到子进程时，子进程就可以执行。以下跟踪过程截图，最后可以一直跟踪ret_from_fork,直到返回用户态。
-跟踪copy_thread和ret_from_fork
+跟踪copy_thread直到ret_from_fork
 ![6](https://github.com/zbh24/LinuxCourseBlog/blob/master/fork/6.png)
 ![7](https://github.com/zbh24/LinuxCourseBlog/blob/master/fork/7.png)
 ####创建一个新进程的大体架构
@@ -35,6 +35,6 @@ truct task_struct {
 162		childregs->sp = sp;
 164	p->thread.ip = (unsigned long) ret_from_fork;
 ```
-所以，我们接着执行，当调度到子进程时，就在到ret_from_frok执行，就是进行一些恢复现场的工作，恢复好就会返回到用户态正常执行。
+所以，我们接着执行，当调度到子进程时，就会到ret_from_frok执行，就是进行一些恢复现场的工作，恢复好现就会返回到用户态正常执行。
 ####总结
 通过以上的分析，我们知道了linux是如何创建一个新进程的了，一般都是通过fork，复制一个已有的进程，进而产生一个子进程。
