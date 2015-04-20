@@ -30,7 +30,15 @@
 首先，先找出对应的格式，直到找到为止。接着，找到以后，retval = fmt->load_binary(bprm)把对应的文件以对应的格式加载到内存里面（fmt->load_binary(bprm))，这就是这段代码的作用。然后，根据相应的格式，因为是linux，所以格式是elf，所以会执行对应的load_elf_binary,然后在这个函数里面有一个函数start_thread，这个函数会复制内核堆栈，同时会设置新的进程的执行位置，即会设置新的eip，把eip指向新程序的入口位置。
 ####Gdb调试程序
 我们一边做实验一边来说明，首先，我们像往常一样开始调试，exec对应的系统调用的中断处理程序为sys_exec，我们在这里加个断点。如下图。
-然后，我们选择S，一步一步执行，会发现程序会sys_execve->do_execve -> do_execve_common ->  exec_binprm,如下图。
+![10](https://github.com/zbh24/LinuxCourseBlog/blob/master/seventh/10.png)
+然后，我们选择S，一步一步执行，会发现程序会sys_execve->do_execve -> do_execve_common ->  exec_binprm....
+![13](https://github.com/zbh24/LinuxCourseBlog/blob/master/seventh/13.png)
 到了这里注意，我们发现设置了新的eip，我们看一下这个新的eip是什么位置，我们选择po eip,同时 read -h hello，我们发现hello的入口位置就是这个eip的值。如图：
+![16](https://github.com/zbh24/LinuxCourseBlog/blob/master/seventh/16.png)
 最后，选择继续执行C，hello成功运行。
+![17](https://github.com/zbh24/LinuxCourseBlog/blob/master/seventh/17.png)
 ####程序的静态和动态链接
+程序有静态链接和动态链接，动态链接又分为装载时链接和运行时链接。
+所谓静态链接呢，就是在链接时，就已经把库文件打包好到源程序了，这时候装载到内存里就可以直接运行了，不在需要做什么工作了。想对于sys_execve系统调用load_elf_interp指的就是程序的入口地址。装载时链接，就是在程序装入时内存时，进行链接，我们一般，最常使用的方式就是这种。而运行时链接是在运行时动态加载的，这种一般需要使用几个函数如，dlopen，dlsym等等。装载时链接等加载源程序结束后load_elf_interp接着把控制权交给了链接器ld。
+####总结
+本周，我们主要需要了execve系统调用，结合上周的fork系统调用，我们就可以成功地运行一个新程序了。简单地说，fork负责创建一个和父进程一样的子进程来运行，而execve负责把子进程来运行新的程序。
